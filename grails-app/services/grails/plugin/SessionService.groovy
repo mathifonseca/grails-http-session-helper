@@ -2,6 +2,7 @@ package grails.plugin
 
 import org.codehaus.groovy.grails.web.util.WebUtils
 import javax.annotation.PostConstruct
+import grails.util.Holders
 
 class SessionService {
 
