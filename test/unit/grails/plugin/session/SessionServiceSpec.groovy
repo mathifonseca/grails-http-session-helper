@@ -1,11 +1,8 @@
-package grails.session
+package grails.plugin.session
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-/**
- * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
- */
 @TestFor(SessionService)
 class SessionServiceSpec extends Specification {
 
@@ -17,4 +14,5 @@ class SessionServiceSpec extends Specification {
 
     void "test something"() {
     }
+    
 }
