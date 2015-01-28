@@ -1,4 +1,4 @@
-package grails.plugin
+package grails.plugin.session
 
 import org.codehaus.groovy.grails.web.util.WebUtils
 import javax.annotation.PostConstruct
