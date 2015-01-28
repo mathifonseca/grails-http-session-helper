@@ -21,7 +21,7 @@ class SessionService {
 
             attributes = Holders.config.session.attributes
 
-            log.info "SessionService initialized with ${attributes.size()} attributes"
+            log.info "Initialized with ${attributes.size()} attributes"
 
         } catch (Exception ex) {
 
