@@ -45,8 +45,8 @@ If other developers (or yourself) try to store something else, they have to decl
 Also, there is a TagLib for getting values from session directly in GSP views. Here is how to get the token (a String value) and the name of the logged user (a key in a Map):
 
 ```gsp
-<g:session attribute='token' />
-<g:session attribute='user' key='name' />
+<s:session attribute='token' />
+<s:session attribute='user' key='name' />
 ```
 
 ##Collaboration

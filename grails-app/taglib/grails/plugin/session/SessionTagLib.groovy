@@ -2,7 +2,7 @@ package grails.plugin.session
 
 class SessionTagLib {
 
-    static namespace = 'g'
+    static namespace = 's'
 
     static returnObjectForTags = ['session']
 
