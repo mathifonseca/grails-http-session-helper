@@ -8,15 +8,15 @@ This plugin helps you manage your session attributes neatly and in a friendly wa
 class SomeController {
 
   def sessionService
-  
+
   def someMethod() {
-  
+
     def user = sessionService.getUser() //gets the value of the 'USER' attribute from session
-    
+
     sessionService.setCart([:]) //sets the 'CART' attribute in the current session with an empty map as value
-    
+
     sessionService.delToken() //deletes the 'TOKEN' attribute from the current session
-    
+
   }
 
 }
@@ -42,7 +42,7 @@ If other developers (or yourself) try to store something else, they have to decl
 
 ## TagLib
 
-Also, there is a TagLib for getting values from session directly in GSP views. Here is how to get the token (a String value) and the name of the logged user (a key in a HashMap):
+Also, there is a TagLib for getting values from session directly in GSP views. Here is how to get the token (a String value) and the name of the logged user (a key in a Map):
 
 ```gsp
 <g:session attribute='token' />

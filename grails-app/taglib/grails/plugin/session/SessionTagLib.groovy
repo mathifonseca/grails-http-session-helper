@@ -10,18 +10,16 @@ class SessionTagLib {
 
     def session = { attrs ->
 
-    	def attr = attrs?.attribute
+        def attr = attrs?.attribute
 
-    	if (attr) {
+        if (!attr) {
+            return
+        }
 
-            String methodName = "get" + attr
+        String methodName = "get" + attr
 
-    		def value = sessionService."${methodName}"()
+        def value = sessionService."${methodName}"()
 
-            return value && attrs.key ? value[attrs.key] : value
-
-    	}
-
+        return value && attrs.key ? value[attrs.key] : value
     }
-
 }
