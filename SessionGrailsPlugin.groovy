@@ -1,5 +1,5 @@
 class SessionGrailsPlugin {
-    def version = "1.0.0"
+    def version = "1.0.1"
     def grailsVersion = "2.0 > *"
     def title = "Grails Session Plugin"
     def author = "Mathias Fonseca"

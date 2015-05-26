@@ -9,7 +9,7 @@ class SessionService {
 
     static transactional = false
 
-    private attributes
+    private def attributes
 
     def grailsApplication
 
@@ -26,32 +26,26 @@ class SessionService {
             log.info "Initialized with ${attributes.size()} attributes"
 
         } catch (ex) {
-            log.error "Error while loading attributes from config -> ${ex.message}"
+            log.error "SESSION_ERROR | Error while loading attributes from config -> ${ex.message}"
         }
     }
 
-    private methodMissing(String name, args) {
+    private def methodMissing(String name, args) {
 
         if (!name || name.size() < 4) {
 
-            log.error "Incorrect method name. Must start with get, set or del followed by attribute name."
-            return
+            log.error "SESSION_ERROR | Incorrect method name. Must start with get, set or del followed by attribute name."
 
         }
 
         String attrName = name[3..-1]
 
-        def attr
-
-        if (attributes) {
-            attr = attributes[attrName]
-            if (!attr) log.error "Attribute with name \"${attrName}\" is not registered in config"
-           } else {
-               attr = attrName
-        }
+        def attr = attributes?."$attrName"
 
         if (!attr) {
-            return
+
+            log.error "SESSION_ERROR | Attribute with name \"${attrName}\" is not registered in config"
+
         }
 
         if (name.startsWith('get')) {
@@ -65,35 +59,36 @@ class SessionService {
                 log.debug "GET | attr = ${attr} | value = ${value}"
 
             } catch (ex) {
-                log.error "Error while getting attribute from session -> ${ex.message}", ex
+
+                log.error "SESSION_ERROR | Error while getting attribute from session -> ${ex.message}", ex
+
             }
 
             return value
 
-        }
-
-        if (name.startsWith('set')) {
+        } else if (name.startsWith('set')) {
 
             log.debug "SET | attr = ${attr} | value = ${args[0]}"
 
             setAttribute(attr, args[0])
-            return
 
-        }
-
-        if (name.startsWith('del')) {
+        } else if (name.startsWith('del')) {
 
             log.debug "DEL | attr = ${attr}"
 
             deleteAttribute(attr)
+
         }
+
+        return
+
     }
 
-    private getAttribute(String attrName) {
+    private def getAttribute(String attrName) {
         try {
             return session.getAttribute(attrName)
         } catch (Exception ex) {
-            log.error "Could not get attribute from session -> ${ex}", ex
+            log.error "SESSION_ERROR | Could not get attribute from session -> ${ex}", ex
         }
     }
 
@@ -101,15 +96,16 @@ class SessionService {
         try {
             session.setAttribute(attrName, value)
         } catch (Exception ex) {
-            log.error "Could not set attribute in session -> ${ex}", ex
+            log.error "SESSION_ERROR | Could not set attribute in session -> ${ex}", ex
         }
     }
 
     private void deleteAttribute(String attrName) {
         try {
             session.removeAttribute(attrName)
-        } catch (ex) {
-            log.error "Could not remove attribute from session -> ${ex}", ex
+        } catch (Exception ex) {
+            log.error "SESSION_ERROR | Could not remove attribute from session -> ${ex}", ex
         }
     }
+
 }
