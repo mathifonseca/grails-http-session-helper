@@ -1,6 +1,6 @@
-# grails-session
+# grails-http-session-helper
 
-[![Build Status](https://travis-ci.org/mathifonseca/grails-session.svg?branch=master)](https://travis-ci.org/mathifonseca/grails-session)
+[![Build Status](https://travis-ci.org/mathifonseca/grails-http-session-helper.svg?branch=master)](https://travis-ci.org/mathifonseca/grails-http-session-helper)
 
 This plugin helps you manage your session attributes neatly and in a friendly way. By injecting the `sessionService` in your artefacts, you can set, get, or delete values for predefined keys like this:
 

@@ -1,4 +1,4 @@
-package grails.plugin.session
+package grails.plugin.httpsessionhelper
 
 class SessionTagLib {
 
@@ -22,4 +22,5 @@ class SessionTagLib {
 
         return value && attrs.key ? value[attrs.key] : value
     }
+    
 }

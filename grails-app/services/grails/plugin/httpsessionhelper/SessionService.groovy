@@ -1,4 +1,4 @@
-package grails.plugin.session
+package grails.plugin.httpsessionhelper
 
 import javax.annotation.PostConstruct
 import javax.servlet.http.HttpSession
