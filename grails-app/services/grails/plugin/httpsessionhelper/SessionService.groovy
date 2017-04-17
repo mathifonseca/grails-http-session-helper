@@ -30,6 +30,44 @@ class SessionService {
         }
     }
 
+    private boolean validateAttribute(String name) {
+
+        def attr = attributes?."$attrName"
+
+        if (!attr) {
+            log.error "SESSION_ERROR | Attribute with name \"${name}\" is not registered in config"
+        }
+
+        return attr
+
+    }
+
+    private def propertyMissing(String name) {
+
+        boolean validAttribute = validateAttribute(name)
+
+        if (validAttribute) {
+
+            return getAttribute(name)
+
+        }
+
+        return null
+
+    }
+
+    private def propertyMissing(String name, value) {
+
+        boolean validAttribute = validateAttribute(name)
+
+        if (validAttribute) {
+
+            setAttribute(name, value)
+
+        }
+
+    }
+
     private def methodMissing(String name, args) {
 
         if (!name || name.size() < 4) {
@@ -42,41 +80,23 @@ class SessionService {
 
         def attr = attributes?."$attrName"
 
-        if (!attr) {
+        boolean validAttribute = validateAttribute(attr)
 
-            log.error "SESSION_ERROR | Attribute with name \"${attrName}\" is not registered in config"
+        if (validAttribute) {
 
-        }
+            if (name.startsWith('get')) {
 
-        if (name.startsWith('get')) {
+                return getAttribute(attr)
 
-            def value
+            } else if (name.startsWith('set')) {
 
-            try {
+                setAttribute(attr, args[0])
 
-                value = getAttribute(attr)
+            } else if (name.startsWith('del')) {
 
-                log.debug "GET | attr = ${attr} | value = ${value}"
-
-            } catch (ex) {
-
-                log.error "SESSION_ERROR | Error while getting attribute from session -> ${ex.message}", ex
+                deleteAttribute(attr)
 
             }
-
-            return value
-
-        } else if (name.startsWith('set')) {
-
-            log.debug "SET | attr = ${attr} | value = ${args[0]}"
-
-            setAttribute(attr, args[0])
-
-        } else if (name.startsWith('del')) {
-
-            log.debug "DEL | attr = ${attr}"
-
-            deleteAttribute(attr)
 
         }
 
@@ -86,7 +106,23 @@ class SessionService {
 
     private def getAttribute(String attrName) {
         try {
-            return session.getAttribute(attrName)
+
+            def value
+
+            try {
+
+                value = session.getAttribute(attrName)
+
+                log.debug "GET | attr = ${attrName} | value = ${value}"
+
+            } catch (ex) {
+
+                log.error "SESSION_ERROR | Error while getting attribute from session -> ${ex.message}", ex
+
+            }
+
+            return value
+
         } catch (Exception ex) {
             log.error "SESSION_ERROR | Could not get attribute from session -> ${ex}", ex
         }
@@ -94,6 +130,7 @@ class SessionService {
 
     private void setAttribute(String attrName, value) {
         try {
+            log.debug "SET | attr = ${attrName} | value = ${value}"
             session.setAttribute(attrName, value)
         } catch (Exception ex) {
             log.error "SESSION_ERROR | Could not set attribute in session -> ${ex}", ex
@@ -102,6 +139,7 @@ class SessionService {
 
     private void deleteAttribute(String attrName) {
         try {
+            log.debug "DEL | attr = ${attrName}"
             session.removeAttribute(attrName)
         } catch (Exception ex) {
             log.error "SESSION_ERROR | Could not remove attribute from session -> ${ex}", ex

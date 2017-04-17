@@ -1,5 +1,5 @@
 class HttpSessionHelperGrailsPlugin {
-    def version = "2.0.0"
+    def version = "2.1.0"
     def grailsVersion = "2.0 > *"
     def title = "Grails HTTP Session Helper Plugin"
     def author = "Mathias Fonseca"
